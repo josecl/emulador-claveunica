@@ -1,0 +1,14 @@
+
+parameters:
+    level: 8
+
+    paths:
+        - config
+        - src
+        - tests
+
+    checkOctaneCompatibility: true
+    checkMissingIterableValueType: false
+
+    #ignoreErrors:
+    #    - '#Call to an undefined method Faker\\Generator::#'
