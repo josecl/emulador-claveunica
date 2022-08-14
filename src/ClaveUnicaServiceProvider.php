@@ -19,7 +19,7 @@ class ClaveUnicaServiceProvider extends ServiceProvider
         $this->registerRoutes();
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__.'/../config/claveunica.php' => config_path('claveunica.php')], 'config');
+            $this->publishes([__DIR__.'/../config/claveunica.php' => config_path('claveunica.php')], 'claveunica');
         }
     }
 
