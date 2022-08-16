@@ -2,6 +2,7 @@
 
 namespace Josecl\ClaveUnica\Http\Controllers;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,9 +11,11 @@ class ClaveUnicaController
 {
     public function authorize(Request $request): RedirectResponse
     {
-        logger('authorize', $request->all());
+        if (config('claveunica.log_requests')) {
+            logger('authorize', $request->all());
+        }
 
-        $request->validate([
+        $safe = $request->validate([
             'client_id' => ['required', 'string'],
             'redirect_uri' => ['required', 'url'],
             'state' => ['required', 'string'],
@@ -20,7 +23,9 @@ class ClaveUnicaController
             'response_type' => ['required', 'string', 'in:code'],
         ]);
 
-        $state = $request->input('state');
+        throw_if($safe['client_id'] !== config('claveunica.client_id'), new AuthenticationException());
+
+        $state = $safe['state'];
         $code = md5($state);
 
         return response()->redirectTo($request->input('redirect_uri')."?code=$code&state=$state");
@@ -28,9 +33,11 @@ class ClaveUnicaController
 
     public function token(Request $request): array
     {
-        logger('token', $request->all());
+        if (config('claveunica.log_requests')) {
+            logger('token', $request->all());
+        }
 
-        $request->validate([
+        $safe = $request->validate([
             'grant_type' => ['required', 'string', 'in:authorization_code'],
             'client_id' => ['required', 'string'],
             'client_secret' => ['required', 'string'],
@@ -38,10 +45,15 @@ class ClaveUnicaController
             'redirect_uri' => ['required', 'url'],
         ]);
 
+        throw_if($safe['client_id'] !== config('claveunica.client_id'), new AuthenticationException());
+        throw_if($safe['client_secret'] !== config('claveunica.client_secret'), new AuthenticationException());
+
+        [$rut, $dv] = str(config('claveunica.rut'))->upper()->remove('.')->explode('-');
+
         $user = [
             'RolUnico' => [
-                'numero' => '44444444',
-                'DV' => '4',
+                'numero' => $rut,
+                'DV' => $dv,
             ],
             'name' => [
                 'nombres' => ['José', 'Antonio'],
@@ -58,7 +70,9 @@ class ClaveUnicaController
 
     public function userinfo(Request $request): array
     {
-        logger('userinfo Authorization: '.$request->header('Authorization'));
+        if (config('claveunica.log_requests')) {
+            logger('userinfo', ['authorization' => $request->header('Authorization')]);
+        }
 
         Validator::validate([
             'authorization' => $request->header('Authorization'),

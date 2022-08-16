@@ -25,6 +25,10 @@ class ClaveUnicaServiceProvider extends ServiceProvider
 
     protected function registerRoutes(): void
     {
+        if (! config('claveunica.enabled')) {
+            return;
+        }
+
         Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/routes.php');
         });
