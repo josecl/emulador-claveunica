@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /**
      * Habilita las rutas de autenticación OAuth ClaveÚnica.

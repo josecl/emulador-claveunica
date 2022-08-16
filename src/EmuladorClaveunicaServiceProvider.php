@@ -11,7 +11,7 @@ class EmuladorClaveunicaServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/emulador-claveunica.php', 'emulador-claveunica');
+        $this->mergeConfigFrom(__DIR__ . '/../config/emulador-claveunica.php', 'emulador-claveunica');
     }
 
     public function boot(): void
@@ -19,7 +19,7 @@ class EmuladorClaveunicaServiceProvider extends ServiceProvider
         $this->registerRoutes();
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__.'/../config/emulador-claveunica.php' => config_path('emulador-claveunica.php')], 'emulador-claveunica');
+            $this->publishes([__DIR__ . '/../config/emulador-claveunica.php' => config_path('emulador-claveunica.php')], 'emulador-claveunica');
         }
     }
 
@@ -30,7 +30,7 @@ class EmuladorClaveunicaServiceProvider extends ServiceProvider
         }
 
         Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__.'/routes.php');
+            $this->loadRoutesFrom(__DIR__ . '/routes.php');
         });
     }
 
