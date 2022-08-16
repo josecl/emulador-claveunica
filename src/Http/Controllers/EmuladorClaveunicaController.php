@@ -82,6 +82,6 @@ class EmuladorClaveunicaController
             'authorization' => ['required', 'string', 'starts_with:Bearer '],
         ]);
 
-        return json_decode(base64_decode(str($request->header('Authorization'))->after('Bearer '), true), true, 10, JSON_THROW_ON_ERROR);
+        return json_decode(base64_decode(str($request->header('Authorization'))->after('Bearer ')->toString(), true), true, 10, JSON_THROW_ON_ERROR);
     }
 }
