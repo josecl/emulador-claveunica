@@ -1,17 +1,17 @@
 <?php
 
-namespace Josecl\ClaveUnica\Http\Controllers;
+namespace Josecl\EmuladorClaveunica\Http\Controllers;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ClaveUnicaController
+class EmuladorClaveunicaController
 {
     public function authorize(Request $request): RedirectResponse
     {
-        if (config('claveunica.log_requests')) {
+        if (config('emulador-claveunica.log_requests')) {
             logger('authorize', $request->all());
         }
 
@@ -23,7 +23,7 @@ class ClaveUnicaController
             'response_type' => ['required', 'string', 'in:code'],
         ]);
 
-        throw_if($safe['client_id'] !== config('claveunica.client_id'), new AuthenticationException());
+        throw_if($safe['client_id'] !== config('emulador-claveunica.client_id'), new AuthenticationException());
 
         $state = $safe['state'];
         $code = md5($state);
@@ -33,7 +33,7 @@ class ClaveUnicaController
 
     public function token(Request $request): array
     {
-        if (config('claveunica.log_requests')) {
+        if (config('emulador-claveunica.log_requests')) {
             logger('token', $request->all());
         }
 
@@ -45,10 +45,10 @@ class ClaveUnicaController
             'redirect_uri' => ['required', 'url'],
         ]);
 
-        throw_if($safe['client_id'] !== config('claveunica.client_id'), new AuthenticationException());
-        throw_if($safe['client_secret'] !== config('claveunica.client_secret'), new AuthenticationException());
+        throw_if($safe['client_id'] !== config('emulador-claveunica.client_id'), new AuthenticationException());
+        throw_if($safe['client_secret'] !== config('emulador-claveunica.client_secret'), new AuthenticationException());
 
-        [$rut, $dv] = str(config('claveunica.rut'))->upper()->remove('.')->explode('-');
+        [$rut, $dv] = str(config('emulador-claveunica.rut'))->upper()->remove('.')->explode('-');
 
         $user = [
             'RolUnico' => [
@@ -70,7 +70,7 @@ class ClaveUnicaController
 
     public function userinfo(Request $request): array
     {
-        if (config('claveunica.log_requests')) {
+        if (config('emulador-claveunica.log_requests')) {
             logger('userinfo', ['authorization' => $request->header('Authorization')]);
         }
 

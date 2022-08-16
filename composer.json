@@ -1,7 +1,7 @@
 {
-    "name": "josecl/claveunica",
+    "name": "josecl/emulador-claveunica",
     "type": "library",
-    "description": "Simulador de servicio de ClaveÚnica",
+    "description": "Emulador del servicio de ClaveÚnica de Gobierno de Chile",
     "require": {
         "php": "^8.0",
         "ext-json": "*",
@@ -31,19 +31,19 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Josecl\\ClaveUnica\\ClaveUnicaServiceProvider"
+                "Josecl\\EmuladorClaveunica\\EmuladorClaveunicaServiceProvider"
             ],
             "aliases": []
         }
     },
     "autoload": {
         "psr-4": {
-            "Josecl\\ClaveUnica\\": "src"
+            "Josecl\\EmuladorClaveunica\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Josecl\\ClaveUnica\\Tests\\": "tests"
+            "Josecl\\EmuladorClaveunica\\Tests\\": "tests"
         }
     },
     "minimum-stability": "dev",

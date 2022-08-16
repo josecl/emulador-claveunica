@@ -20,26 +20,26 @@ que no cuenten con un ambiente de certificación habilitado en ClaveÚnica.
 Instalar dependencia:
 
 ```shell
-composer require josecl/claveunica
+composer require josecl/emulador-claveunica
 ```
 
 Publicar archivo de configuración:
 
 ```shell
-php artisan vendor:publish --tag claveunica
+php artisan vendor:publish --tag emulador-claveunica
 ```
 
 Agregar las configuraciones requeridas, al menos debes configurar:
 
-- `CLAVEUNICA_FAKE_ENABLED`
-- `CLAVEUNICA_FAKE_CLIENT_ID`
-- `CLAVEUNICA_FAKE_CLIENT_SECRET`
+- `EMULADOR_CLAVEUNICA_ENABLED`
+- `EMULADOR_CLAVEUNICA_CLIENT_ID`
+- `EMULADOR_CLAVEUNICA_CLIENT_SECRET`
 
 
 ### Configuración de cliente
 
 Se deben configurar las rutas del fujo de autenticación con ClaveÚnica.
-Estas rutas pueden ser modificadas mediante la variable `CLAVEUNICA_FAKE_PREFIX`.
+Estas rutas pueden ser modificadas mediante la variable `EMULADOR_CLAVEUNICA_PREFIX`.
 
 Las rutas originales son las siguientes:
 

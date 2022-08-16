@@ -11,8 +11,7 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
-use Josecl\ClaveUnica\Tests\TestCase;
+use Josecl\EmuladorClaveunica\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__); //->in('Feature');
 

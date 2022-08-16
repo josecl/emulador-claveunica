@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Josecl\ClaveUnica;
+namespace Josecl\EmuladorClaveunica;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class ClaveUnicaServiceProvider extends ServiceProvider
+class EmuladorClaveunicaServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/claveunica.php', 'claveunica');
+        $this->mergeConfigFrom(__DIR__.'/../config/emulador-claveunica.php', 'emulador-claveunica');
     }
 
     public function boot(): void
@@ -19,13 +19,13 @@ class ClaveUnicaServiceProvider extends ServiceProvider
         $this->registerRoutes();
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__.'/../config/claveunica.php' => config_path('claveunica.php')], 'claveunica');
+            $this->publishes([__DIR__.'/../config/emulador-claveunica.php' => config_path('emulador-claveunica.php')], 'emulador-claveunica');
         }
     }
 
     protected function registerRoutes(): void
     {
-        if (! config('claveunica.enabled')) {
+        if (! config('emulador-claveunica.enabled')) {
             return;
         }
 
@@ -37,14 +37,14 @@ class ClaveUnicaServiceProvider extends ServiceProvider
     protected function routeConfiguration(): array
     {
         return [
-            'prefix' => config('claveunica.prefix'),
-            'middleware' => config('claveunica.middleware'),
+            'prefix' => config('emulador-claveunica.prefix'),
+            'middleware' => config('emulador-claveunica.middleware'),
         ];
     }
 
 //    private function registerBlade(): void
 //    {
-//        $this->loadViewsFrom(__DIR__.'/../resources/views', 'claveunica');
+//        $this->loadViewsFrom(__DIR__.'/../resources/views', 'emulador-claveunica');
 //    }
 
 //        Route::prefix('api')
