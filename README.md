@@ -8,7 +8,7 @@ que no cuenten con un ambiente de certificación habilitado en ClaveÚnica.
 > 
 > Se implementan únicamente los mecanismos mínimos para iniciar sesión.
 > Este proyecto no permite validar que una aplicación cumpla con todos 
-> los mecanismos de seguridad requeridos por OAuth ni ClaveÚnica.
+> los mecanismos de seguridad requeridos por OpenID ni ClaveÚnica.
 
 ## Requerimientos
 
