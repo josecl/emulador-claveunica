@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 test('authorize_error', function () {
     config(['emulador-claveunica.client_id' => null]);
     $state = '8AzNFqEikDRwwptAX93pIVzZNnl2qz6EDN3ab7Ug';
@@ -89,7 +91,7 @@ test('userinfo_ok', function () {
 
     $response = $this->postJson(
         route('emulador-claveunica.userinfo'),
-        headers: ['Authorization' => "Bearer $token"]
+        headers: ['Authorization' => "Bearer {$token}"]
     )->assertOk();
 
     expect($response->json())->toMatchArray($user);

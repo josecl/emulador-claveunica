@@ -8,7 +8,7 @@
         "illuminate/contracts": "^9.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.0",
+        "friendsofphp/php-cs-fixer": "^3.9",
         "nunomaduro/collision": "^6.0",
         "nunomaduro/larastan": "^2.0.1",
         "orchestra/testbench": "^7.0",
@@ -52,7 +52,6 @@
         "analyze": "./vendor/bin/phpstan analyze --memory-limit=2G",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint",
         "lint": "./vendor/bin/php-cs-fixer fix --no-interaction --verbose",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

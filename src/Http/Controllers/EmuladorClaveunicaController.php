@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Josecl\EmuladorClaveunica\Http\Controllers;
 
 use Illuminate\Auth\AuthenticationException;
@@ -28,7 +30,7 @@ class EmuladorClaveunicaController
         $state = $safe['state'];
         $code = md5($state);
 
-        return response()->redirectTo($request->input('redirect_uri')."?code=$code&state=$state");
+        return response()->redirectTo($request->input('redirect_uri') . "?code={$code}&state={$state}");
     }
 
     public function token(Request $request): array
@@ -80,6 +82,6 @@ class EmuladorClaveunicaController
             'authorization' => ['required', 'string', 'starts_with:Bearer '],
         ]);
 
-        return json_decode(base64_decode(str($request->header('Authorization'))->after('Bearer ')), true, 10, JSON_THROW_ON_ERROR);
+        return json_decode(base64_decode(str($request->header('Authorization'))->after('Bearer ')->toString(), true), true, 10, JSON_THROW_ON_ERROR);
     }
 }
