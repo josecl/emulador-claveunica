@@ -16,9 +16,16 @@ return [
     'client_secret' => env('EMULADOR_CLAVEUNICA_CLIENT_SECRET'),
 
     /**
-     * RUN con que se realizará el inicio de sesión.
+     * Datos con que se realizará el inicio de sesión.
      */
     'rut' => env('EMULADOR_CLAVEUNICA_RUT', '44444444-4'),
+    'nombres' => env('EMULADOR_CLAVEUNICA_NOMBRES', 'José Antonio'),
+    'apellidos' => env('EMULADOR_CLAVEUNICA_APELLIDOS', 'Rodríguez Valderrama'),
+
+    /**
+     * En ve de mostrar un formulario de login, inicia sesión con los datos por defecto
+     */
+    'autologin' => env('EMULADOR_CLAVEUNICA_AUTOLOGIN', false),
 
     /**
      * Prefijo para las rutas de autenticación OAuth

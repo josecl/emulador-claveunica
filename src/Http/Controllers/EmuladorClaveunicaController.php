@@ -8,10 +8,12 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class EmuladorClaveunicaController
 {
-    public function authorize(Request $request): RedirectResponse
+    public function authorize(Request $request): RedirectResponse|View
     {
         if (config('emulador-claveunica.log_requests')) {
             logger('authorize', $request->all());
@@ -27,10 +29,58 @@ class EmuladorClaveunicaController
 
         throw_if($safe['client_id'] !== config('emulador-claveunica.client_id'), new AuthenticationException());
 
-        $state = $safe['state'];
-        $code = md5($state);
+        if (config('emulador-claveunica.autologin')) {
+            $state = $safe['state'];
+            $code = base64_encode(
+                json_encode([
+                    'rut' => config('emulador-claveunica.rut'),
+                    'nombres' => config('emulador-claveunica.nombres'),
+                    'apellidos' => config('emulador-claveunica.apellidos'),
+                ], JSON_THROW_ON_ERROR)
+            );
 
-        return response()->redirectTo($request->input('redirect_uri') . "?code={$code}&state={$state}");
+            return response()->redirectTo($request->input('redirect_uri') . '?code=' . urlencode($code) . '&state=' . urlencode($state));
+        }
+
+        return view('emulador-claveunica::form', [
+            'hidden' => $safe,
+            'rut' => config('emulador-claveunica.rut'),
+            'nombres' => config('emulador-claveunica.nombres'),
+            'apellidos' => config('emulador-claveunica.apellidos'),
+        ]);
+    }
+
+    public function authorizeAction(Request $request): RedirectResponse
+    {
+        if (config('emulador-claveunica.log_requests')) {
+            logger('authorizeAction', $request->all());
+        }
+
+        $safe = $request->validate([
+            'client_id' => ['required', 'string'],
+            'redirect_uri' => ['required', 'url'],
+            'state' => ['required', 'string'],
+            'scope' => ['required', 'string', 'in:openid run name'],
+            'response_type' => ['required', 'string', 'in:code'],
+            'rut' => ['required', 'string', 'regex:/^[0-9][0-9\.]*\-[0-9kK]$/i'],
+            'nombres' => ['required', 'string'],
+            'apellidos' => ['required', 'string'],
+        ]);
+
+        throw_if($safe['client_id'] !== config('emulador-claveunica.client_id'), new AuthenticationException());
+
+        $state = $safe['state'];
+
+        // TODO: LLevar a un service
+        $code = base64_encode(
+            json_encode([
+                'rut' => $safe['rut'],
+                'nombres' => $safe['nombres'],
+                'apellidos' => $safe['apellidos'],
+            ], JSON_THROW_ON_ERROR)
+        );
+
+        return response()->redirectTo($request->input('redirect_uri') . '?code=' . urlencode($code) . '&state=' . urlencode($state));
     }
 
     public function token(Request $request): array
@@ -50,7 +100,11 @@ class EmuladorClaveunicaController
         throw_if($safe['client_id'] !== config('emulador-claveunica.client_id'), new AuthenticationException());
         throw_if($safe['client_secret'] !== config('emulador-claveunica.client_secret'), new AuthenticationException());
 
-        [$rut, $dv] = str(config('emulador-claveunica.rut'))->upper()->remove('.')->explode('-');
+        $code = rescue(fn () => json_decode(base64_decode($safe['code'], true), true, 10, JSON_THROW_ON_ERROR));
+        throw_unless($code, ValidationException::withMessages(['code' => 'Parámetro `code` malformado']));
+
+
+        [$rut, $dv] = str($code['rut'])->upper()->remove('.')->explode('-');
 
         $user = [
             'RolUnico' => [
@@ -58,8 +112,8 @@ class EmuladorClaveunicaController
                 'DV' => $dv,
             ],
             'name' => [
-                'nombres' => ['José', 'Antonio'],
-                'apellidos' => ['Rodríguez', 'Valderrama'],
+                'nombres' => str($code['nombres'])->split('/\s+/'),
+                'apellidos' => str($code['apellidos'])->split('/\s+/'),
             ],
         ];
 
