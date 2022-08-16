@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Simulador de servicio de ClaveÚnica",
     "require": {
-        "php": "^8.1",
+        "php": "^8.0",
         "ext-json": "*",
         "illuminate/contracts": "^9.0"
     },
