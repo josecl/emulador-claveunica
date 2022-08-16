@@ -16,11 +16,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         Http::preventStrayRequests();
     }
 
-    protected function defineEnvironment($app): void
-    {
-//        $app['config']->set('app.name', config('claveunica'));
-    }
-
     protected function getPackageProviders($app): array
     {
         return [
