@@ -32,7 +32,7 @@
         <h2 style="margin-top: 0">Emulador de ClaveÚnica</h2>
 
     <div>
-        <input name="rut" type="text" placeholder="RUN" value="{{ $rut }}" style="max-width: 160px" required minlength="3" maxlength="12" pattern="\d[\d\.]{1,9}-[\dkK]" title="Debes ingresar un RUT válido">
+        <input name="rut" type="text" placeholder="RUN" value="{{ $rut }}" style="max-width: 160px" required minlength="3" maxlength="12" pattern="\d[\d\.]{0,9}-[\dkK]" title="Debes ingresar un RUT válido">
         <label for="rut">RUN</label>
     </div>
 
