@@ -2,6 +2,7 @@
     "name": "josecl/emulador-claveunica",
     "type": "library",
     "description": "Emulador del servicio de ClaveÚnica de Gobierno de Chile",
+    "license": "MIT",
     "require": {
         "php": "^8.0",
         "ext-json": "*",
