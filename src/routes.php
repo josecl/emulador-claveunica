@@ -12,7 +12,7 @@ use Josecl\EmuladorClaveunica\Http\Controllers\EmuladorClaveunicaController;
 */
 Route::as('emulador-claveunica.')->group(function () {
     Route::get('authorize', [EmuladorClaveunicaController::class, 'authorize'])->name('authorize');
+    Route::post('authorize', [EmuladorClaveunicaController::class, 'authorizeAction'])->name('authorize-action');
     Route::post('token', [EmuladorClaveunicaController::class, 'token'])->name('token');
     Route::post('userinfo', [EmuladorClaveunicaController::class, 'userinfo'])->name('userinfo');
-    // Route::post('{api}/{function?}', [ApiFakeController::class, 'handler'])->where(['function' => '[\w\d-]+'])->name('handler');
 });

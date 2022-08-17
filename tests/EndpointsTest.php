@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+
+beforeEach(function () {
+    config(['emulador-claveunica.autologin' => true]);
+});
+
+
+
 test('authorize_error', function () {
     config(['emulador-claveunica.client_id' => null]);
     $state = '8AzNFqEikDRwwptAX93pIVzZNnl2qz6EDN3ab7Ug';
@@ -36,11 +43,17 @@ test('token_ok', function () {
     config(['emulador-claveunica.client_id' => $client_id = 'c9eb635576b74382b1b933000cd5a524']);
     config(['emulador-claveunica.client_secret' => $client_secret = 'b93de677942b0494d66b9a027a57403f89d8da79']);
 
+    $code = base64_encode(json_encode([
+        'rut' => '44444444-4',
+        'nombres' => 'José Antonio',
+        'apellidos' => 'Rodríguez Valderrama',
+    ], JSON_THROW_ON_ERROR));
+
     $response = $this->postJson(route('emulador-claveunica.token', [
         'grant_type' => 'authorization_code',
         'client_id' => $client_id,
         'client_secret' => $client_secret,
-        'code' => 'iCKgqnpuskSomsjiCKgqnpuskSomsj',
+        'code' => $code,
         'redirect_uri' => 'https://sem.docker.zecovery.com/api/usuarios/auth/emulador-claveunica/callback',
     ]))->assertOk();
 
