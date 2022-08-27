@@ -5,6 +5,7 @@ parameters:
     paths:
         - config
         - src
+        - resources
         - tests
 
     checkOctaneCompatibility: true
