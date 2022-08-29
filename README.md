@@ -54,3 +54,30 @@ Debes configurar tu aplicación para utilizar las siguientes rutas:
 - http://example.com/openid/userinfo
 
 Donde 'http://example.com' corresponde a la URL donde el emulador de ClaveÚnica está instalado.
+
+
+### Integración con `josecl/claveunica`
+
+Si utilizas el cliente [josecl/claveunica](https://github.com/josecl/claveunica),
+actualiza el archivo `config/services.php` con los parámetros adicionales y configura las
+siguientes variables de ambiente de acuerdo a la documentación anterior:
+
+```php
+'claveunica' => [    
+  'client_id' => env('CLAVEUNICA_CLIENT_ID'),  
+  'client_secret' => env('CLAVEUNICA_CLIENT_SECRET'),  
+  'redirect' => env('CLAVEUNICA_REDIRECT_URI') 
+  // Configura servicio emulador ClaveÚnica...
+  'auth_uri' => env('CLAVEUNICA_AUTH_URI', 'https://accounts.claveunica.gob.cl/openid/authorize'),
+  'token_uri' => env('CLAVEUNICA_TOKEN_URI', 'https://accounts.claveunica.gob.cl/openid/token'),
+  'user_uri' => env('CLAVEUNICA_USER_URI', 'https://www.claveunica.gob.cl/openid/userinfo'),
+],
+```
+
+Por ejemplo: 
+
+```dotenv
+CLAVEUNICA_AUTH_URI=http://localhost:8080/openid/authorize
+CLAVEUNICA_TOKEN_URI=http://localhost:8080/openid/token
+CLAVEUNICA_USER_URI=http://localhost:8080/openid/userinfo
+```
