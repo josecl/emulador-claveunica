@@ -11,7 +11,7 @@ test('authorize_form', function () {
     $redirect_uri = 'https://example.com/auth/emulador-claveunica/callback';
     $state = '8AzNFqEikDRwwptAX93pIVzZNnl2qz6EDN3ab7Ug';
 
-    $this->getJson(route('emulador-claveunica.authorize', [
+    test()->getJson(route('emulador-claveunica.authorize', [
         'client_id' => $client_id,
         'redirect_uri' => $redirect_uri,
         'scope' => 'openid run name',
@@ -27,7 +27,7 @@ test('authorize_form_submit', function () {
     $redirect_uri = 'https://example.com/auth/emulador-claveunica/callback';
     $state = '8AzNFqEikDRwwptAX93pIVzZNnl2qz6EDN3ab7Ug';
 
-    $this->postJson(route('emulador-claveunica.authorize', [
+    test()->postJson(route('emulador-claveunica.authorize', [
         'client_id' => $client_id,
         'redirect_uri' => $redirect_uri,
         'scope' => 'openid run name',

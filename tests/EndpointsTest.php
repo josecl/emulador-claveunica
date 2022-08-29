@@ -13,7 +13,7 @@ test('authorize_error', function () {
     config(['emulador-claveunica.client_id' => null]);
     $state = '8AzNFqEikDRwwptAX93pIVzZNnl2qz6EDN3ab7Ug';
 
-    $this->getJson(route('emulador-claveunica.authorize', [
+    test()->getJson(route('emulador-claveunica.authorize', [
         'client_id' => 'c9eb635576b74382b1b933000cd5a524',
         'redirect_uri' => 'https://example.com/auth/emulador-claveunica/callback',
         'scope' => 'openid run name',
@@ -27,7 +27,7 @@ test('authorize_ok', function () {
     $redirect_uri = 'https://example.com/auth/emulador-claveunica/callback';
     $state = '8AzNFqEikDRwwptAX93pIVzZNnl2qz6EDN3ab7Ug';
 
-    $this->getJson(route('emulador-claveunica.authorize', [
+    test()->getJson(route('emulador-claveunica.authorize', [
         'client_id' => $client_id,
         'redirect_uri' => $redirect_uri,
         'scope' => 'openid run name',
@@ -49,7 +49,7 @@ test('token_ok', function () {
         'apellidos' => 'Rodríguez Valderrama',
     ], JSON_THROW_ON_ERROR));
 
-    $response = $this->postJson(route('emulador-claveunica.token', [
+    $response = test()->postJson(route('emulador-claveunica.token', [
         'grant_type' => 'authorization_code',
         'client_id' => $client_id,
         'client_secret' => $client_secret,
@@ -67,7 +67,7 @@ test('token_error_client_id', function () {
     config(['emulador-claveunica.client_id' => $client_id = 'c9eb635576b74382b1b933000cd5a524']);
     config(['emulador-claveunica.client_secret' => $client_secret = 'b93de677942b0494d66b9a027a57403f89d8da79']);
 
-    $this->postJson(route('emulador-claveunica.token', [
+    test()->postJson(route('emulador-claveunica.token', [
         'grant_type' => 'authorization_code',
         'client_id' => '::crdencial-invalida::',
         'client_secret' => $client_secret,
@@ -80,7 +80,7 @@ test('token_error_client_secret', function () {
     config(['emulador-claveunica.client_id' => $client_id = 'c9eb635576b74382b1b933000cd5a524']);
     config(['emulador-claveunica.client_secret' => $client_secret = 'b93de677942b0494d66b9a027a57403f89d8da79']);
 
-    $this->postJson(route('emulador-claveunica.token', [
+    test()->postJson(route('emulador-claveunica.token', [
         'grant_type' => 'authorization_code',
         'client_id' => $client_id,
         'client_secret' => '::crdencial-invalida::',
@@ -102,7 +102,7 @@ test('userinfo_ok', function () {
     ];
     $token = base64_encode(json_encode($user, JSON_THROW_ON_ERROR));
 
-    $response = $this->postJson(
+    $response = test()->postJson(
         route('emulador-claveunica.userinfo'),
         headers: ['Authorization' => "Bearer {$token}"]
     )->assertOk();

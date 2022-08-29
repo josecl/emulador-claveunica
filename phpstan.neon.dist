@@ -5,11 +5,11 @@ parameters:
     paths:
         - config
         - src
-        - resources
         - tests
 
     checkOctaneCompatibility: true
     checkMissingIterableValueType: false
 
-    #ignoreErrors:
-    #    - '#Call to an undefined method Faker\\Generator::#'
+    ignoreErrors:
+        - '#Call to an undefined method Pest\\Expectation.*#'
+        - '#Access to an undefined property Pest\\Expectation.*#'
