@@ -20,7 +20,10 @@ class EmuladorClaveunicaServiceProvider extends ServiceProvider
         $this->registerRoutes();
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__ . '/../config/emulador-claveunica.php' => config_path('emulador-claveunica.php')], 'emulador-claveunica');
+            $this->publishes(
+                [__DIR__ . '/../config/emulador-claveunica.php' => config_path('emulador-claveunica.php')],
+                'emulador-claveunica'
+            );
         }
     }
 

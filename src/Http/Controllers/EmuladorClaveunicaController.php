@@ -39,7 +39,9 @@ class EmuladorClaveunicaController
                 ], JSON_THROW_ON_ERROR)
             );
 
-            return response()->redirectTo($request->input('redirect_uri') . '?code=' . urlencode($code) . '&state=' . urlencode($state));
+            $url = $request->input('redirect_uri') . '?code=' . urlencode($code) . '&state=' . urlencode($state);
+
+            return response()->redirectTo($url);
         }
 
         return view('emulador-claveunica::form', [
@@ -80,7 +82,9 @@ class EmuladorClaveunicaController
             ], JSON_THROW_ON_ERROR)
         );
 
-        return response()->redirectTo($request->input('redirect_uri') . '?code=' . urlencode($code) . '&state=' . urlencode($state));
+        $url = $request->input('redirect_uri') . '?code=' . urlencode($code) . '&state=' . urlencode($state);
+
+        return response()->redirectTo($url);
     }
 
     public function token(Request $request): array
