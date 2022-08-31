@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
-use function Safe\base64_decode;
-use function Safe\json_decode;
-use function Safe\json_encode;
-
 class EmuladorClaveunicaController
 {
     public function authorize(Request $request): RedirectResponse|View
