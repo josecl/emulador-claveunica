@@ -11,5 +11,6 @@ parameters:
     checkMissingIterableValueType: false
 
     ignoreErrors:
+        - '#Class PHP_CodeSniffer\\.* not found#'
         - '#Call to an undefined method Pest\\Expectation.*#'
         - '#Access to an undefined property Pest\\Expectation.*#'
