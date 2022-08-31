@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
+use function Safe\base64_decode;
+use function Safe\json_decode;
+use function Safe\json_encode;
+
 class EmuladorClaveunicaController
 {
     public function authorize(Request $request): RedirectResponse|View
@@ -102,7 +106,6 @@ class EmuladorClaveunicaController
 
         $code = rescue(fn () => json_decode(base64_decode($safe['code'], true), true, 10, JSON_THROW_ON_ERROR));
         throw_unless($code, ValidationException::withMessages(['code' => 'Parámetro `code` malformado']));
-
 
         [$rut, $dv] = str($code['rut'])->upper()->remove('.')->explode('-');
 
