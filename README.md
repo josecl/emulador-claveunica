@@ -1,5 +1,7 @@
 # Emulador de ClaveÚnica - Laravel
 
+[![tests](https://github.com/josecl/emulador-claveunica/actions/workflows/tests.yml/badge.svg)](https://github.com/josecl/emulador-claveunica/actions/workflows/tests.yml)
+
 Este proyecto emula el servicio de autenticación de [ClaveÚnica](https://claveunica.gob.cl/)
 del Gobierno de Chile con el fin de permitir iniciar sesión en sistemas en desarrollo
 que no cuenten con un ambiente de certificación habilitado en ClaveÚnica.

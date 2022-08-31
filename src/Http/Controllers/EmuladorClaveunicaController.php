@@ -100,7 +100,8 @@ class EmuladorClaveunicaController
         throw_if($safe['client_id'] !== config('emulador-claveunica.client_id'), new AuthenticationException());
         throw_if($safe['client_secret'] !== config('emulador-claveunica.client_secret'), new AuthenticationException());
 
-        $code = rescue(fn () => json_decode(base64_decode($safe['code'], true), true, 10, JSON_THROW_ON_ERROR));
+        $data = base64_decode($safe['code'], true) ?: '{}';
+        $code = rescue(fn () => json_decode($data, true, 10, JSON_THROW_ON_ERROR));
         throw_unless($code, ValidationException::withMessages(['code' => 'Parámetro `code` malformado']));
 
         [$rut, $dv] = str($code['rut'])->upper()->remove('.')->explode('-');
@@ -135,6 +136,8 @@ class EmuladorClaveunicaController
             'authorization' => ['required', 'string', 'starts_with:Bearer '],
         ]);
 
-        return json_decode(base64_decode(str($request->header('Authorization'))->after('Bearer ')->toString(), true), true, 10, JSON_THROW_ON_ERROR);
+        $data = base64_decode(str($request->headers->get('Authorization'))->after('Bearer ')->toString(), true) ?: '{}';
+
+        return json_decode($data, true, 10, JSON_THROW_ON_ERROR);
     }
 }
