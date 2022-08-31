@@ -9,7 +9,7 @@
         "illuminate/contracts": "^9.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "<=3.9.5",
+        "friendsofphp/php-cs-fixer": "^3.9.5",
         "nunomaduro/collision": "^6.0",
         "nunomaduro/larastan": "^2.0.1",
         "nunomaduro/phpinsights": "^2.4",
