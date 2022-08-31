@@ -53,6 +53,7 @@
     "prefer-stable": true,
     "scripts": {
         "analyze": "./vendor/bin/phpstan analyze --memory-limit=2G",
+        "insights": "vendor/bin/phpinsights --no-interaction --ansi --config-path=config/insights.php",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
         "lint": "./vendor/bin/php-cs-fixer fix --no-interaction --verbose",
